@@ -1,12 +1,14 @@
 package io.swagger.model;
 
+import java.time.LocalTime;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.data.jpa.convert.threetenbp.ThreeTenBackPortJpaConverters;
 import org.springframework.validation.annotation.Validated;
-import org.threeten.bp.LocalTime;
+
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,8 +30,8 @@ public class Bus   {
   @JsonProperty("staffName")
   private String staffName = null;
 
-  @JsonProperty("boardingPoing")
-  private String boardingPoing = null;
+  @JsonProperty("boardingPoint")
+  private String boardingPoint = null;
 
   @JsonProperty("time")
   private String time = null;
@@ -80,24 +82,24 @@ public class Bus   {
     this.staffName = staffName;
   }
 
-  public Bus boardingPoing(String boardingPoing) {
-    this.boardingPoing = boardingPoing;
+  public Bus boardingPoint(String boardingPoint) {
+    this.boardingPoint = boardingPoint;
     return this;
   }
 
   /**
-   * Get boardingPoing
-   * @return boardingPoing
+   * Get boardingPoint
+   * @return boardingPoint
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getBoardingPoing() {
-    return boardingPoing;
+  public String getBoardingPoint() {
+    return boardingPoint;
   }
 
-  public void setBoardingPoing(String boardingPoing) {
-    this.boardingPoing = boardingPoing;
+  public void setBoardingPoint(String boardingPoint) {
+    this.boardingPoint = boardingPoint;
   }
 
   public Bus time(String time) {
@@ -172,7 +174,7 @@ public class Bus   {
     Bus bus = (Bus) o;
     return Objects.equals(this.busNumber, bus.busNumber) &&
         Objects.equals(this.staffName, bus.staffName) &&
-        Objects.equals(this.boardingPoing, bus.boardingPoing) &&
+        Objects.equals(this.boardingPoint, bus.boardingPoint) &&
         Objects.equals(this.time, bus.time) &&
         Objects.equals(this.numberofSeatAreFree, bus.numberofSeatAreFree) &&
         Objects.equals(this.costPerSeat, bus.costPerSeat);
@@ -180,7 +182,7 @@ public class Bus   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(busNumber, staffName, boardingPoing, time, numberofSeatAreFree, costPerSeat);
+    return Objects.hash(busNumber, staffName, boardingPoint, time, numberofSeatAreFree, costPerSeat);
   }
 
   @Override
@@ -190,7 +192,7 @@ public class Bus   {
     
     sb.append("    busNumber: ").append(toIndentedString(busNumber)).append("\n");
     sb.append("    staffName: ").append(toIndentedString(staffName)).append("\n");
-    sb.append("    boardingPoing: ").append(toIndentedString(boardingPoing)).append("\n");
+    sb.append("    boardingPoing: ").append(toIndentedString(boardingPoint)).append("\n");
     sb.append("    time: ").append(toIndentedString(time)).append("\n");
     sb.append("    numberofSeatAreFree: ").append(toIndentedString(numberofSeatAreFree)).append("\n");
     sb.append("    costPerSeat: ").append(toIndentedString(costPerSeat)).append("\n");

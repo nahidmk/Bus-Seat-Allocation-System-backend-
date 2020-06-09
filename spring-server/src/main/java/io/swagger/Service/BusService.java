@@ -34,10 +34,10 @@ public class BusService {
         }
     }
 
-    public void deleteBus(Bus bus) throws NotFoundException {
-        if(busRepository.exists(bus.getBusNumber()))
+    public void deleteBus(String busNumber) throws NotFoundException {
+        if(busRepository.exists(busNumber))
         {
-            busRepository.delete(bus);
+            busRepository.delete(busNumber);
         }else
         {
             throw new NotFoundException(404,"not found");
@@ -47,4 +47,6 @@ public class BusService {
     public Bus findByBusNumber(String busNumber){
         return busRepository.findOne(busNumber);
     }
+
+
 }

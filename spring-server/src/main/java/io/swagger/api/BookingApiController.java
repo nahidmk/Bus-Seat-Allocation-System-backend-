@@ -4,6 +4,7 @@ import io.swagger.Service.BookingService;
 import io.swagger.model.Booking;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.model.Bus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,34 +58,19 @@ public class BookingApiController implements BookingApi {
     }
 
     public ResponseEntity<List<Booking>> findAllBooking() {
-        List<Booking> bookings = bookingService.findAll();
-        if(bookings.size()==0){
-            return ResponseEntity.notFound().build();
-        }else {
-            return ResponseEntity.ok(bookings);
-        }
+
+            return ResponseEntity.ok(bookingService.findAll());
     }
 
     public ResponseEntity<List<Booking>> findBookingByBusNumber(@ApiParam(value = " Bus Number that need to be considered for filter",required=true) @PathVariable("busNumber") String busNumber) {
-        List<Booking> bookings = bookingService.findByBusNumber(busNumber);
-        if(bookings.size()==0)
-        {
-            return ResponseEntity.notFound().build();
-        }else {
-            return ResponseEntity.ok(bookings);
-        }
+            return ResponseEntity.ok(bookingService.findByBusNumber(busNumber));
+
 
     }
 
     public ResponseEntity<List<Booking>> findBookingByphone(@ApiParam(value = " phone Number that need to be considered for filter",required=true) @PathVariable("phone") String phone) {
 
-        List<Booking> bookings = bookingService.findByPhone(phone);
-        if(bookings.size()==0)
-        {
-            return ResponseEntity.notFound().build();
-        }else {
-            return ResponseEntity.ok(bookings);
-        }
+            return ResponseEntity.ok(bookingService.findByPhone(phone));
     }
 
     public ResponseEntity<Void> updateBooking(@ApiParam(value = "Booking object that needs to be added" ,required=true )  @Valid @RequestBody Booking body) {
@@ -97,16 +83,25 @@ public class BookingApiController implements BookingApi {
     }
 
 
-    public ResponseEntity<Void> deleteListOfBooking(@ApiParam(value = " Phone required for find list of list of booking",required=true) @PathVariable("phone") String phone,@ApiParam(value = " noOfbooking is required for deleteing the number of booking",required=true) @PathVariable("noOfBooking") Integer noOfBooking) {
+    public ResponseEntity<Void> deleteListOfBooking(@ApiParam(value = " Phone required for find list of list of booking",required=true) @PathVariable("phone") String phone,@ApiParam(value = " Bus Number required for find list of list of booking",required=true) @PathVariable("busNumber") String busNumber,@ApiParam(value = " noOfbooking is required for deleteing the number of booking",required=true) @PathVariable("noOfBooking") Integer noOfBooking) {
 
         List<Booking> bookings = bookingService.findByPhone(phone);
         if(bookings.size()<noOfBooking)
         {
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }else {
-            bookingService.listOfDelete(phone,noOfBooking);
+            bookingService.listOfDelete(phone,busNumber,noOfBooking);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }
+    }
+
+    public ResponseEntity<List<Booking>> findBookingByphoneAndBusNumber(@ApiParam(value = " phone Number that need to be considered for filter",required=true) @PathVariable("phone") String phone,@ApiParam(value = " Bus Number that need to be considered for filter",required=true) @PathVariable("busNumber") String busNumber){
+        return ResponseEntity.ok(bookingService.findBookingByphoneAndBusNumber(phone,busNumber));
+    }
+
+    public ResponseEntity<Void> addBookingList (@ApiParam(value = "Bus object that needs to be add" ,required=true )  @PathVariable("busList") List<Booking> bookings){
+        bookingService.addBusList(bookings);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }

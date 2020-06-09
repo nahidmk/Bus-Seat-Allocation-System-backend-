@@ -20,11 +20,11 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-05-30T00:10:05.092Z")
 @Entity
-public class Booking   {
+public class Booking extends AbstractEntity implements Cloneable  {
 
-  @Id
-  @JsonProperty("id")
-  private Long id = null;
+//  @Id
+//  @JsonProperty("id")
+//  private Long id = null;
 
 
   @JsonProperty("name")
@@ -42,63 +42,12 @@ public class Booking   {
   /**
    * Payment Types
    */
-  public enum PaymentTypeEnum {
-    BKASH("bkash"),
-    
-    ROCATE("Rocate"),
-    
-    NAGAD("Nagad");
-
-    private String value;
-
-    PaymentTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static PaymentTypeEnum fromValue(String text) {
-      for (PaymentTypeEnum b : PaymentTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
 
   @JsonProperty("paymentType")
-  private PaymentTypeEnum paymentType = null;
+  private String paymentType = null;
 
   @JsonProperty("seatNumber")
   private String seatNumber = null;
-
-
-  public Booking id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-   **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
 
   public Booking name(String name) {
     this.name = name;
@@ -181,7 +130,7 @@ public class Booking   {
     this.date = date;
   }
 
-  public Booking paymentType(PaymentTypeEnum paymentType) {
+  public Booking paymentType(String paymentType) {
     this.paymentType = paymentType;
     return this;
   }
@@ -193,11 +142,11 @@ public class Booking   {
   @ApiModelProperty(value = "Payment Types")
 
 
-  public PaymentTypeEnum getPaymentType() {
+  public String getPaymentType() {
     return paymentType;
   }
 
-  public void setPaymentType(PaymentTypeEnum paymentType) {
+  public void setPaymentType(String paymentType) {
     this.paymentType = paymentType;
   }
 

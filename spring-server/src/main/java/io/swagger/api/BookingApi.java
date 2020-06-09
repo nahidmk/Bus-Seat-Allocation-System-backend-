@@ -7,6 +7,7 @@ package io.swagger.api;
 
 import io.swagger.model.Booking;
 import io.swagger.annotations.*;
+import io.swagger.model.Bus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,7 +67,7 @@ public interface BookingApi {
     ResponseEntity<List<Booking>> findBookingByBusNumber(@ApiParam(value = " Bus Number that need to be considered for filter",required=true) @PathVariable("busNumber") String busNumber);
 
 
-    @ApiOperation(value = "Finds Booking by Bus Number", nickname = "findBookingByphone", notes = "", response = Booking.class, responseContainer = "List", tags={ "Booking", })
+    @ApiOperation(value = "Finds Booking by phone Number", nickname = "findBookingByphone", notes = "", response = Booking.class, responseContainer = "List", tags={ "Booking", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Booking.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid Booking phone") })
@@ -91,9 +92,28 @@ public interface BookingApi {
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Invalid object"),
             @ApiResponse(code = 404, message = "Booking not found") })
-    @RequestMapping(value = "/booking/{phone}/{noOfBooking}",
+    @RequestMapping(value = "/booking/{phone}/{busNumber}/{noOfBooking}",
             produces = { "application/json" },
             method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteListOfBooking(@ApiParam(value = " Phone required for find list of list of booking",required=true) @PathVariable("phone") String phone,@ApiParam(value = " noOfbooking is required for deleteing the number of booking",required=true) @PathVariable("noOfBooking") Integer noOfBooking);
+    ResponseEntity<Void> deleteListOfBooking(@ApiParam(value = " Phone required for find list of list of booking",required=true) @PathVariable("phone") String phone,@ApiParam(value = " Bus Number required for find list of list of booking",required=true) @PathVariable("busNumber") String busNumber,@ApiParam(value = " noOfbooking is required for deleteing the number of booking",required=true) @PathVariable("noOfBooking") Integer noOfBooking);
+
+
+    @ApiOperation(value = "Finds Booking by Bus Number and Phone number", nickname = "findBookingByphoneAndBusNumber", notes = "", response = Booking.class, responseContainer = "List", tags={ "Booking", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "successful operation", response = Booking.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid Booking phone") })
+    @RequestMapping(value = "/booking/by/{phone}/{busNumber}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Booking>> findBookingByphoneAndBusNumber(@ApiParam(value = " phone Number that need to be considered for filter",required=true) @PathVariable("phone") String phone,@ApiParam(value = " Bus Number that need to be considered for filter",required=true) @PathVariable("busNumber") String busNumber);
+
+    @ApiOperation(value = "Add  new Bookings", nickname = "addBookingList", notes = "", tags={ "Booking", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 405, message = "Invalid input") })
+    @RequestMapping(value = "/booking/list/{bookingList}",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<Void> addBookingList(@ApiParam(value = "Bookings object that needs to be add" ,required=true )  @PathVariable("bookingList") List<Booking> bookingList);
 
 }

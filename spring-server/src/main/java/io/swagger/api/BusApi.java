@@ -41,10 +41,10 @@ public interface BusApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid object"),
         @ApiResponse(code = 404, message = "Bus not found") })
-    @RequestMapping(value = "/bus",
+    @RequestMapping(value = "/bus/delete/{busNumber}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteBus(@ApiParam(value = "Bus object that needs to be deleted" ,required=true )  @Valid @RequestBody Bus body);
+    ResponseEntity<Void> deleteBus(@ApiParam(value = "Bus Number that needs to be deleted" ,required=true )  @PathVariable("busNumber") String busNumber);
 
 
     @ApiOperation(value = "Find all bus", nickname = "findAll", notes = "Return All the Bus from the system", response = Bus.class, responseContainer = "List", tags={ "Bus", })
@@ -76,5 +76,6 @@ public interface BusApi {
         consumes = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Void> updateBus(@ApiParam(value = "Bus object that needs to be added" ,required=true )  @Valid @RequestBody Bus body);
+
 
 }

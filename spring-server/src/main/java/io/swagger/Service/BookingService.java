@@ -3,9 +3,11 @@ package io.swagger.Service;
 import io.swagger.Repository.BookingRepository;
 import io.swagger.api.NotFoundException;
 import io.swagger.model.Booking;
+import io.swagger.model.Bus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -51,18 +53,32 @@ public class BookingService {
         return bookingRepository.findBookingsByBusNumber(busNumber);
     }
 
+    public long count(){
+        return bookingRepository.count();
+    }
+
     public Booking findbyid(Long id)
     {
         return bookingRepository.findOne(id);
     }
 
-    public void listOfDelete(String phone, int noOfBooking)
+    public void listOfDelete(String phone, String busNumber, int noOfBooking)
     {
-        List<Booking> bookings = bookingRepository.findBookingsByPhone(phone);
-        for(int i = 0;i<noOfBooking;i++)
+        List<Booking> bookings = bookingRepository.findBookingsByPhoneAndBusNumber(phone,busNumber);
+        List<Booking> bookingList = new ArrayList<>();
+        for(int i = 1;i<=noOfBooking;i++)
         {
-            bookings.remove(i);
+            bookingList.add(bookings.get(bookings.size()-i));
         }
-        bookingRepository.deleteInBatch(bookings);
+        bookingRepository.deleteInBatch(bookingList);
+    }
+
+    public List<Booking> findBookingByphoneAndBusNumber(String phone, String busNumber){
+        return bookingRepository.findBookingsByPhoneAndBusNumber(phone,busNumber);
+    }
+
+    public void addBusList(List<Booking> bookings)
+    {
+        bookingRepository.save(bookings);
     }
 }

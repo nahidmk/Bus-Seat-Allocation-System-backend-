@@ -47,9 +47,9 @@ public class BusApiController implements BusApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> deleteBus(@ApiParam(value = "Bus object that needs to be deleted" ,required=true )  @Valid @RequestBody Bus body) {
+    public ResponseEntity<Void> deleteBus(@ApiParam(value = "Bus Number that needs to be deleted" ,required=true )  @PathVariable("busNumber") String busNumber) {
         try {
-            busService.deleteBus(body);
+            busService.deleteBus(busNumber);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -57,19 +57,15 @@ public class BusApiController implements BusApi {
     }
 
     public ResponseEntity<List<Bus>> findAll() {
-        List<Bus> buses = busService.findAll();
-        if(buses.size()==0)
-        {
-            return ResponseEntity.notFound().build();
-        }else {
-            return ResponseEntity.ok(buses);
-        }
+
+            return ResponseEntity.ok(busService.findAll());
     }
 
     public ResponseEntity<Bus> findBusByBusNumber(@ApiParam(value = " Bus Number that need to be considered for filter",required=true) @PathVariable("busNumber") String busNumber) {
         Bus bus = busService.findByBusNumber(busNumber);
         if(bus!=null)
         {
+            System.out.println(bus);
             return ResponseEntity.ok(bus);
         }else {
             return ResponseEntity.notFound().build();
@@ -84,5 +80,8 @@ public class BusApiController implements BusApi {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+
 
 }
